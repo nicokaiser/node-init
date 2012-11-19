@@ -3,7 +3,7 @@
 DESC="node.js service"
 DAEMON_USER=www-data
 DAEMON=/bin/sh
-DAEMON_ARGS=/var/www/node.example.com/current/bin/node-service.sh
+DAEMON_ARGS=$(dirname $(readlink -f $0))/node-service.sh
 PIDFILE=/var/run/node-service.pid
 
 . /lib/init/vars.sh
