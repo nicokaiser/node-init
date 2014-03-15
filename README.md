@@ -1,6 +1,6 @@
 # Node.js service SysVinit scripts
 
-These are some simple init.d scripts for a node server. They can be used on SysVinit systems like Debian Squeeze.
+A battle-tested solution for respawning node services on SysVinit-based (init.d) systems like Debian.
 
 
 ## Configuration
