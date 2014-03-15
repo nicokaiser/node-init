@@ -1,5 +1,14 @@
 #!/bin/sh
 
+### BEGIN INIT INFO
+# Provides:          node-service
+# Required-Start:    $local_fs $remote_fs $network $syslog $mail-transport-agent
+# Required-Stop:     $local_fs $remote_fs $network $syslog $mail-transport-agent
+# Default-Start:     2 3 4 5
+# Default-Stop:      0 1 6
+# Short-Description: Start/stop node-service
+### END INIT INFO
+
 DESC="node.js service"
 DAEMON_USER=www-data
 DAEMON=/bin/sh
@@ -19,7 +28,10 @@ do_start()
     sysctl -q -w net.ipv4.tcp_keepalive_time=300 # 7200
     sysctl -q -w net.ipv4.tcp_keepalive_probes=2 # 9
     sysctl -q -w net.ipv4.tcp_keepalive_intvl=5 # 75
-    
+
+    # Wait to make sure network is there
+    sleep 1
+
     # Redirect privileged ports
     iptables -t nat -I PREROUTING -p tcp --dport 80 -j REDIRECT --to-port 10080
     
