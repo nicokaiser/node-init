@@ -19,21 +19,21 @@ The scripts assume the following configuration (you might adjust the paths):
 Some TCP tweaks are done in the init script. This allows us to use many connections (open files) and reduce the timeouts, so e.g. broken WebSocket connections don't stay at the server for 2 hours.
 
 ```
-    # To allow many connections
-    ulimit -n 32767
-    
-    # TCP tweaks
-    sysctl -q -w net.ipv4.tcp_retries2=5 # 15
-    sysctl -q -w net.ipv4.tcp_keepalive_time=300 # 7200
-    sysctl -q -w net.ipv4.tcp_keepalive_probes=2 # 9
-    sysctl -q -w net.ipv4.tcp_keepalive_intvl=5 # 75
+# To allow many connections
+ulimit -n 32767
+
+# TCP tweaks
+sysctl -q -w net.ipv4.tcp_retries2=5 # 15
+sysctl -q -w net.ipv4.tcp_keepalive_time=300 # 7200
+sysctl -q -w net.ipv4.tcp_keepalive_probes=2 # 9
+sysctl -q -w net.ipv4.tcp_keepalive_intvl=5 # 75
 ```
 
 As we cannot listen on port 80 as non-root user, we have to redirect port 80 to 10080 (where the server listens):
 
 ```
-    # Redirect privileged ports
-    iptables -t nat -I PREROUTING -p tcp --dport 80 -j REDIRECT --to-port 10080
+# Redirect privileged ports
+iptables -t nat -I PREROUTING -p tcp --dport 80 -j REDIRECT --to-port 10080
 ```
 
 This can of course be commented out if redirection is done with a load balancer like nginx.
@@ -41,7 +41,7 @@ This can of course be commented out if redirection is done with a load balancer 
 
 ## Respawn on exit
 
-The "node-service.sh" script restarts the node process when it crashes. The same can be achieved with [forever](https://github.com/indexzero/forever), but I did not find a good way to run forever from an init script.
+The `node-service.sh` script restarts the node process when it crashes. The same can be achieved with [forever](https://github.com/indexzero/forever), but I did not find a good way to run forever from an init script.
 
 
 ## License
