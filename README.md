@@ -44,6 +44,6 @@ This can of course be commented out if redirection is done with a load balancer 
 The "node-service.sh" script restarts the node process when it crashes. The same can be achieved with [forever](https://github.com/indexzero/forever), but I did not find a good way to run forever from an init script.
 
 
-#### Author: [Nico Kaiser][0]
+## License
 
-[0]: http://siriux.net/
+[MIT License](LICENSE.md)
