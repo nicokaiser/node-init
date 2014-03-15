@@ -7,12 +7,12 @@ These are some simple init.d scripts for a node server. They can be used on SysV
 
 The scripts assume the following configuration (you might adjust the paths):
 
- * The scripts are installed in /var/www/node.example.com/current
+ * The scripts are installed in `/var/www/node.example.com`
  * The server script is server.js
- * The server runs as wwwdocs (i.e. no privileged ports)
- * The server listens on port 10080, but is redirected from port 80 (via iptables)
- * Node is installed in /opt/nodejs/v0.4
- * All output is logged to /var/log/node-service.log
+ * The server runs as user www-data (i.e. no privileged ports)
+ * The server listens on port `10080`, but is redirected from port `80` (via iptables)
+ * Node is installed in `/opt/nodejs/v0.10`
+ * All output is logged to `/var/log/node-service.log`
 
 
 ## TCP settings
@@ -36,6 +36,8 @@ As we cannot listen on port 80 as non-root user, we have to redirect port 80 to 
     # Redirect privileged ports
     iptables -t nat -I PREROUTING -p tcp --dport 80 -j REDIRECT --to-port 10080
 ```
+
+This can of course be commented out if redirection is done with a load balancer like nginx.
 
 
 ## Respawn on exit
